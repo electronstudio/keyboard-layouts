@@ -7,7 +7,7 @@
 ;; Replaces 'caps-lock' key with 'escape' key
 ;; Replaces 'left meta' key with 'left control' key.
 ;;
-;; Moves 'tab' key to 'delete' key
+;; Moves 'meta' key *tap* to 'delete' key
 ;;    Hold that key for `mod` layer:
 ;;        cursor keys left on left
 ;;        num pad on right
@@ -17,12 +17,12 @@
 ;;
 ;; Tap shift, ctrl and alt keys for parenthesis
 ;;
-;;
 ;; TODO
 ;; ====
 ;;
-;; get mod keys to work with mouse clicks
-;; find a use for the 'nubs' key on the bottom left
+;; Find a use for the 'nubs' key on the bottom left.
+;; Currently using it as tap when tapped and a double tap when held
+;; of M-F6 to toggle my window manager.
 
 
 (defcfg
@@ -59,7 +59,7 @@
   tab   @q   @w   @e   @r   @t                  @y   @u   @i   @o   @p    \
   esc   @a   @s   @d   @f   @g                  @h   @j   @k   @l   @;    '
   @lsft @z   @x   @c   @v   @b                  @n   @m   @,   @.   @/    @rsft
-        grv  nubs    left rght                        up   down [    ]
+        grv  @nubs left rght                        up   down [    ]
 
                            @lctl @lalt   @rctl @rmet
                       bspc @mod   home   pgup  ret spc
@@ -81,7 +81,7 @@
                                 _      _
 )
 
-(defalias mod (tap-next tab (layer-toggle mod)))
+(defalias mod (tap-next lmet (layer-toggle mod)))
 
 (defalias a (tap-macro a (tap-hold 300 XX (tap-macro bspc (tap-macro S-a XX)))))
 (defalias b (tap-macro b (tap-hold 300 XX (tap-macro bspc (tap-macro S-b XX)))))
@@ -115,14 +115,17 @@
 (defalias / (tap-macro / (tap-hold 300 XX (tap-macro bspc (tap-macro S-/ XX)))))
 (defalias ; (tap-macro ; (tap-hold 300 XX (tap-macro bspc (tap-macro S-; XX)))))
 
-(defalias lsft (tap-next S-9 lsft))
-(defalias rsft (tap-next S-0 rsft))
-(defalias lctl (tap-next S-[ lctl))
-(defalias rctl (tap-next ] rctl ))
-(defalias lalt (tap-next [ lalt ))
-(defalias rmet (tap-next S-] rmet ))
+(defalias lsft (tap-hold-next 300 S-9 lsft))
+(defalias rsft (tap-hold-next 300 S-0 rsft))
+(defalias lctl (tap-hold-next 300 S-[ lctl))
+(defalias rctl (tap-hold-next 300 ] rctl ))
+(defalias lalt (tap-hold-next 300 [ lalt ))
+(defalias rmet (tap-hold-next 300 S-] rmet ))
 
 (defalias copy C-c)
 (defalias paste C-v)
+
+(defalias nubs (tap-hold-next 200 M-F6 (tap-macro-release M-F6 M-F6)))
+
 
 
