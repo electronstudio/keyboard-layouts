@@ -1,0 +1,144 @@
+;; Slightly improved QWERTY for Kinesis Advantage keyboard US + Homerow mod
+;; ========================================================================
+;;
+;; This version has modifier keys on the homerow.  Combining this with auto-shift
+;; is difficult. You may have problems with modifiers not working if you are
+;; typing fast and press a key before you release previous key. You may want
+;; to adjust the timeouts.
+;;
+;; Sets key repeat rate to 40
+;;
+;; Moves 'delete' key to 'pause' key
+;; Replaces 'caps-lock' key with 'escape' key
+;; Replaces 'left meta' key with 'left control' key.
+;;
+;; Moves 'meta' key *tap* to 'delete' key
+;;    Hold that key for `mod` layer:
+;;        cursor keys left on left
+;;        num pad on right
+;;        £ on 3
+;;
+;; Hold any key for more than 300ms but less than 1000 ms to type uppercase version
+;; (The upper limit only applies to homerow keys and might need adjustment)
+;;
+;; Hold homerow keys for shift, alt, ctl, meta.
+;;
+;; Tap shift, ctrl and alt keys for parenthesis.
+;;
+;; TODO:
+;; -----
+;; add number row
+;; add symbols to mod layer
+;;
+;; 'nubs key on bottom left'
+;; -------------------------
+;;
+;; Currently using it as tap when tapped and a double tap when held
+;; of M-F6 to toggle my window manager.
+
+
+(defcfg
+  input  (device-file "/dev/input/by-id/usb-05f3_0007-event-kbd")
+  output (uinput-sink "My KMonad output"   "sleep 1 && setxkbmap -option compose:ralt && xset r rate 200 40")
+  fallthrough true
+  allow-cmd true
+  cmp-seq ralt    ;; Set the compose key to `RightAlt'
+  cmp-seq-delay 2 ;; 5ms delay between each compose-key sequence press
+  key-seq-delay 2 ;; 5ms delay between each outputted key event
+)
+
+
+
+(defsrc
+  esc F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12  prnt slck pause
+
+  =    1    2    3    4    5                   6    7    8    9    0    -
+  tab  q    w    e    r    t                   y    u    i    o    p    \
+  caps a    s    d    f    g                   h    j    k    l    ;    '
+  lsft z    x    c    v    b                   n    m    ,    .    /    rsft
+       grv  nubs left rght                          up   down [    ]
+
+                           met lalt   rctl rmet
+                     bspc  del home   pgup  ret spc
+                               end    pgdn
+)
+
+
+(deflayer default
+  esc F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12  prnt slck del
+
+  =     1    2    3    4    5                   6    7    8    9    0     -
+  tab   @q   @w   @e   @r   @t                  @y   @u   @i   @o   @p    \
+  esc   @a   @s   @d   @f   @g                  @h   @j   @k   @l   @;    '
+  @lsft @z   @x   @c   @v   @b                  @n   @m   @,   @.   @/    @rsft
+        grv  @nubs left rght                        up   down [    ]
+
+                           @lctl @lalt   @rctl @rmet
+                      bspc @mod   home   pgup  ret spc
+                                  end    pgdn
+)
+
+
+(deflayer mod
+  _   _    _    _    _    _    _    _    _    _    _   _   _   _    _    _
+
+  _    _    _    £    _    _                    _    _    _    _    _    _
+  _    _    w    up   _    _                    _    7    8    9    -    _
+  _    _    left down right _                   _    4    5    6    +    _
+  _    _    _    _    _    _                    _    1    2    3    ret  _
+       _    _    _    _                              up   down .    ret
+
+                           _    _      _     _   
+                      _    _    _      _     _   _
+                                _      _
+)
+
+(defalias mod (tap-next lmet (layer-toggle mod)))
+
+(defalias
+	a (tap-hold 300 a 						(tap-hold-next-press 1000 S-a lmet))
+	b (tap-hold 300 b (tap-macro S-b XX))
+	c (tap-hold 300 c (tap-macro S-c XX))
+	d (tap-hold 300 d 						(tap-hold-next-press 1000 S-d lctl))
+	e (tap-hold 300 e (tap-macro S-e XX))
+	f (tap-hold 300 f 						(tap-hold-next-press 1000 S-f lsft))
+	g (tap-hold 300 g (tap-macro S-g XX))
+	h (tap-hold 300 h (tap-macro S-h XX))
+	i (tap-hold 300 i (tap-macro S-i XX))
+	j (tap-hold 300 j 						(tap-hold-next-press 1000 S-j rsft))
+	k (tap-hold 300 k 						(tap-hold-next-press 1000 S-k rctl))
+	l (tap-hold 300 l 						(tap-hold-next-press 1000 S-l ralt))
+	m (tap-hold 300 m (tap-macro S-m XX))
+	n (tap-hold 300 n (tap-macro S-n XX))
+	o (tap-hold 300 o (tap-macro S-o XX))
+	p (tap-hold 300 p (tap-macro S-p XX))
+	q (tap-hold 300 q (tap-macro S-q XX))
+	r (tap-hold 300 r (tap-macro S-r XX))
+	s (tap-hold 300 s 						(tap-hold-next-press 1000 S-s lalt))
+	t (tap-hold 300 t (tap-macro S-t XX))
+	u (tap-hold 300 u (tap-macro S-u XX))
+	v (tap-hold 300 v (tap-macro S-v XX))
+	w (tap-hold 300 w (tap-macro S-w XX))
+	x (tap-hold 300 x (tap-macro S-x XX))
+	y (tap-hold 300 y (tap-macro S-y XX))
+	z (tap-hold 300 z (tap-macro S-z XX))
+	, (tap-hold 300 , (tap-macro S-, XX))
+	. (tap-hold 300 . (tap-macro S-. XX))
+	/ (tap-hold 300 / (tap-macro S-/ XX))
+	; (tap-hold 300 ; 						(tap-hold-next-press 1000 S-; rmet))
+)
+
+(defalias lsft (tap-hold-next-press 300 S-9 lsft))
+(defalias rsft (tap-hold-next-press 300 S-0 rsft))
+(defalias lctl (tap-hold-next-press 300 S-[ lctl))
+(defalias rctl (tap-hold-next-press 300 ] rctl ))
+(defalias lalt (tap-hold-next-press 300 [ lalt ))
+(defalias rmet (tap-hold-next-press 300 S-] rmet ))
+
+(defalias copy C-c)
+(defalias paste C-v)
+
+(defalias nubs (tap-hold-next 200 M-F6 (tap-macro-release M-F6 M-F6)))
+
+
+

@@ -1,6 +1,12 @@
 ;; Slightly improved QWERTY for Kinesis Advantage keyboard US
 ;; ==========================================================
 ;;
+;; Unlike the homerow mod version, this version has no delay
+;; when typing.  It immediately types the key, then if you
+;; hold it deletes the key and re-types it in uppercase.
+;; Thus it won't work for all situations and you may prefer the
+;; homerow mod version, but I like the immediate feedback.
+;;
 ;; Sets key repeat rate to 40
 ;;
 ;; Moves 'delete' key to 'pause' key
@@ -17,10 +23,14 @@
 ;;
 ;; Tap shift, ctrl and alt keys for parenthesis
 ;;
-;; TODO
-;; ====
+;; TODO:
+;; -----
+;; add number row
+;; add symbols to mod layer
 ;;
-;; Find a use for the 'nubs' key on the bottom left.
+;; 'nubs key on bottom left'
+;; -------------------------
+;;
 ;; Currently using it as tap when tapped and a double tap when held
 ;; of M-F6 to toggle my window manager.
 
@@ -109,7 +119,6 @@
 (defalias x (tap-macro x (tap-hold 300 XX (tap-macro bspc (tap-macro S-x XX)))))
 (defalias y (tap-macro y (tap-hold 300 XX (tap-macro bspc (tap-macro S-y XX)))))
 (defalias z (tap-macro z (tap-hold 300 XX (tap-macro bspc (tap-macro S-z XX)))))
-
 (defalias , (tap-macro , (tap-hold 300 XX (tap-macro bspc (tap-macro S-, XX)))))
 (defalias . (tap-macro . (tap-hold 300 XX (tap-macro bspc (tap-macro S-. XX)))))
 (defalias / (tap-macro / (tap-hold 300 XX (tap-macro bspc (tap-macro S-/ XX)))))
