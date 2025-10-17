@@ -23,16 +23,11 @@
 ;;
 ;; Tap shift, ctrl and alt keys for parenthesis
 ;;
-;; TODO:
-;; -----
-;; add number row
-;; add symbols to mod layer
-;;
 ;; 'nubs key on bottom left'
 ;; -------------------------
 ;;
 ;; Currently using it as tap when tapped and a double tap when held
-;; of M-F6 to toggle my window manager.
+;; of M-F6 which I assign to pop up an application launcher.
 
 
 (defcfg
@@ -57,7 +52,7 @@
        grv  nubs left rght                          up   down [    ]
 
                            met lalt   rctl rmet
-                     bspc  del home   pgup  ret spc
+                     bspc  del home   pgup ret spc
                                end    pgdn
 )
 
@@ -65,11 +60,11 @@
 (deflayer default
   esc F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12  prnt slck del
 
-  =     1    2    3    4    5                   6    7    8    9    0     -
-  tab   @q   @w   @e   @r   @t                  @y   @u   @i   @o   @p    \
-  esc   @a   @s   @d   @f   @g                  @h   @j   @k   @l   @;    '
+  @=     @1    @2    @3    @4    @5                   @6    @7    @8    @9    @0     @-
+  tab   @q   @w   @e   @r   @t                  @y   @u   @i   @o   @p    @\
+  esc   @a   @s   @d   @f   @g                  @h   @j   @k   @l   @;    @'
   @lsft @z   @x   @c   @v   @b                  @n   @m   @,   @.   @/    @rsft
-        grv  @nubs left rght                        up   down [    ]
+        @grv  @nubs left rght                        up   down @[    @]
 
                            @lctl @lalt   @rctl @rmet
                       bspc @mod   home   pgup  ret spc
@@ -81,60 +76,77 @@
   _   _    _    _    _    _    _    _    _    _    _   _   _   _    _    _
 
   _    _    _    £    _    _                    _    _    _    _    _    _
-  _    _    w    up   _    _                    _    7    8    9    -    _
-  _    _    left down right _                   _    4    5    6    +    _
-  _    _    _    _    _    _                    _    1    2    3    ret  _
-       _    _    _    _                              up   down .    ret
+  _    _    w    up   _    _                    S-7  7    8    9    -    _
+  _    _    left down rght S-9                  S-0  4    5    6    +    _
+  _    S-1  S-2  S-3  S-4  S-5                  S-8  1    2    3    ret  _
+       _    _    _    _                              0    _    .    ret
 
                            _    _      _     _   
-                      _    _    _      _     _   _
+                      del  _    _      _     _   _
                                 _      _
 )
 
-(defalias mod (tap-next lmet (layer-toggle mod)))
+(defalias
+	mod (tap-next tab (layer-toggle mod))
 
-(defalias a (tap-macro a (tap-hold 300 XX (tap-macro bspc (tap-macro S-a XX)))))
-(defalias b (tap-macro b (tap-hold 300 XX (tap-macro bspc (tap-macro S-b XX)))))
-(defalias c (tap-macro c (tap-hold 300 XX (tap-macro bspc (tap-macro S-c XX)))))
-(defalias d (tap-macro d (tap-hold 300 XX (tap-macro bspc (tap-macro S-d XX)))))
-(defalias e (tap-macro e (tap-hold 300 XX (tap-macro bspc (tap-macro S-e XX)))))
-(defalias f (tap-macro f (tap-hold 300 XX (tap-macro bspc (tap-macro S-f XX)))))
-(defalias g (tap-macro g (tap-hold 300 XX (tap-macro bspc (tap-macro S-g XX)))))
-(defalias h (tap-macro h (tap-hold 300 XX (tap-macro bspc (tap-macro S-h XX)))))
-(defalias i (tap-macro i (tap-hold 300 XX (tap-macro bspc (tap-macro S-i XX)))))
-(defalias j (tap-macro j (tap-hold 300 XX (tap-macro bspc (tap-macro S-j XX)))))
-(defalias k (tap-macro k (tap-hold 300 XX (tap-macro bspc (tap-macro S-k XX)))))
-(defalias l (tap-macro l (tap-hold 300 XX (tap-macro bspc (tap-macro S-l XX)))))
-(defalias m (tap-macro m (tap-hold 300 XX (tap-macro bspc (tap-macro S-m XX)))))
-(defalias n (tap-macro n (tap-hold 300 XX (tap-macro bspc (tap-macro S-n XX)))))
-(defalias o (tap-macro o (tap-hold 300 XX (tap-macro bspc (tap-macro S-o XX)))))
-(defalias p (tap-macro p (tap-hold 300 XX (tap-macro bspc (tap-macro S-p XX)))))
-(defalias q (tap-macro q (tap-hold 300 XX (tap-macro bspc (tap-macro S-q XX)))))
-(defalias r (tap-macro r (tap-hold 300 XX (tap-macro bspc (tap-macro S-r XX)))))
-(defalias s (tap-macro s (tap-hold 300 XX (tap-macro bspc (tap-macro S-s XX)))))
-(defalias t (tap-macro t (tap-hold 300 XX (tap-macro bspc (tap-macro S-t XX)))))
-(defalias u (tap-macro u (tap-hold 300 XX (tap-macro bspc (tap-macro S-u XX)))))
-(defalias v (tap-macro v (tap-hold 300 XX (tap-macro bspc (tap-macro S-v XX)))))
-(defalias w (tap-macro w (tap-hold 300 XX (tap-macro bspc (tap-macro S-w XX)))))
-(defalias x (tap-macro x (tap-hold 300 XX (tap-macro bspc (tap-macro S-x XX)))))
-(defalias y (tap-macro y (tap-hold 300 XX (tap-macro bspc (tap-macro S-y XX)))))
-(defalias z (tap-macro z (tap-hold 300 XX (tap-macro bspc (tap-macro S-z XX)))))
-(defalias , (tap-macro , (tap-hold 300 XX (tap-macro bspc (tap-macro S-, XX)))))
-(defalias . (tap-macro . (tap-hold 300 XX (tap-macro bspc (tap-macro S-. XX)))))
-(defalias / (tap-macro / (tap-hold 300 XX (tap-macro bspc (tap-macro S-/ XX)))))
-(defalias ; (tap-macro ; (tap-hold 300 XX (tap-macro bspc (tap-macro S-; XX)))))
+	a (tap-macro a (tap-hold 300 XX (tap-macro bspc (tap-macro S-a XX))))
+	b (tap-macro b (tap-hold 300 XX (tap-macro bspc (tap-macro S-b XX))))
+	c (tap-macro c (tap-hold 300 XX (tap-macro bspc (tap-macro S-c XX))))
+	d (tap-macro d (tap-hold 300 XX (tap-macro bspc (tap-macro S-d XX))))
+	e (tap-macro e (tap-hold 300 XX (tap-macro bspc (tap-macro S-e XX))))
+	f (tap-macro f (tap-hold 300 XX (tap-macro bspc (tap-macro S-f XX))))
+	g (tap-macro g (tap-hold 300 XX (tap-macro bspc (tap-macro S-g XX))))
+	h (tap-macro h (tap-hold 300 XX (tap-macro bspc (tap-macro S-h XX))))
+	i (tap-macro i (tap-hold 300 XX (tap-macro bspc (tap-macro S-i XX))))
+	j (tap-macro j (tap-hold 300 XX (tap-macro bspc (tap-macro S-j XX))))
+	k (tap-macro k (tap-hold 300 XX (tap-macro bspc (tap-macro S-k XX))))
+	l (tap-macro l (tap-hold 300 XX (tap-macro bspc (tap-macro S-l XX))))
+	m (tap-macro m (tap-hold 300 XX (tap-macro bspc (tap-macro S-m XX))))
+	n (tap-macro n (tap-hold 300 XX (tap-macro bspc (tap-macro S-n XX))))
+	o (tap-macro o (tap-hold 300 XX (tap-macro bspc (tap-macro S-o XX))))
+	p (tap-macro p (tap-hold 300 XX (tap-macro bspc (tap-macro S-p XX))))
+	q (tap-macro q (tap-hold 300 XX (tap-macro bspc (tap-macro S-q XX))))
+	r (tap-macro r (tap-hold 300 XX (tap-macro bspc (tap-macro S-r XX))))
+	s (tap-macro s (tap-hold 300 XX (tap-macro bspc (tap-macro S-s XX))))
+	t (tap-macro t (tap-hold 300 XX (tap-macro bspc (tap-macro S-t XX))))
+	u (tap-macro u (tap-hold 300 XX (tap-macro bspc (tap-macro S-u XX))))
+	v (tap-macro v (tap-hold 300 XX (tap-macro bspc (tap-macro S-v XX))))
+	w (tap-macro w (tap-hold 300 XX (tap-macro bspc (tap-macro S-w XX))))
+	x (tap-macro x (tap-hold 300 XX (tap-macro bspc (tap-macro S-x XX))))
+	y (tap-macro y (tap-hold 300 XX (tap-macro bspc (tap-macro S-y XX))))
+	z (tap-macro z (tap-hold 300 XX (tap-macro bspc (tap-macro S-z XX))))
 
-(defalias lsft (tap-hold-next 300 S-9 lsft))
-(defalias rsft (tap-hold-next 300 S-0 rsft))
-(defalias lctl (tap-hold-next 300 S-[ lctl))
-(defalias rctl (tap-hold-next 300 ] rctl ))
-(defalias lalt (tap-hold-next 300 [ lalt ))
-(defalias rmet (tap-hold-next 300 S-] rmet ))
+	, (tap-macro , (tap-hold 300 XX (tap-macro bspc (tap-macro S-, XX))))
+	. (tap-macro . (tap-hold 300 XX (tap-macro bspc (tap-macro S-. XX))))
+	/ (tap-macro / (tap-hold 300 XX (tap-macro bspc (tap-macro S-/ XX))))
+	; (tap-macro ; (tap-hold 300 XX (tap-macro bspc (tap-macro S-; XX))))
+	= (tap-macro = (tap-hold 300 XX (tap-macro bspc (tap-macro S-= XX))))
+	1 (tap-macro 1 (tap-hold 300 XX (tap-macro bspc (tap-macro S-1 XX))))
+	2 (tap-macro 2 (tap-hold 300 XX (tap-macro bspc (tap-macro S-2 XX))))
+	3 (tap-macro 3 (tap-hold 300 XX (tap-macro bspc (tap-macro S-3 XX))))
+	4 (tap-macro 4 (tap-hold 300 XX (tap-macro bspc (tap-macro S-4 XX))))
+	5 (tap-macro 5 (tap-hold 300 XX (tap-macro bspc (tap-macro S-5 XX))))
+	6 (tap-macro 6 (tap-hold 300 XX (tap-macro bspc (tap-macro S-6 XX))))
+	7 (tap-macro 7 (tap-hold 300 XX (tap-macro bspc (tap-macro S-7 XX))))
+	8 (tap-macro 8 (tap-hold 300 XX (tap-macro bspc (tap-macro S-8 XX))))
+	9 (tap-macro 9 (tap-hold 300 XX (tap-macro bspc (tap-macro S-9 XX))))
+	0 (tap-macro 0 (tap-hold 300 XX (tap-macro bspc (tap-macro S-0 XX))))
+	- (tap-macro - (tap-hold 300 XX (tap-macro bspc (tap-macro S-- XX))))
+	\ (tap-macro \ (tap-hold 300 XX (tap-macro bspc (tap-macro S-\ XX))))
+	' (tap-macro ' (tap-hold 300 XX (tap-macro bspc (tap-macro S-' XX))))
+	grv (tap-macro grv (tap-hold 300 XX (tap-macro bspc (tap-macro S-grv XX))))
+	[ (tap-macro [ (tap-hold 300 XX (tap-macro bspc (tap-macro S-[ XX))))
+	] (tap-macro ] (tap-hold 300 XX (tap-macro bspc (tap-macro S-] XX))))
 
-(defalias copy C-c)
-(defalias paste C-v)
+	lsft (tap-hold-next 300 S-9 lsft)
+	rsft (tap-hold-next 300 S-0 rsft)
+	lctl (tap-hold-next 300 S-[ lctl)
+	rctl (tap-hold-next 300 ] rctl )
+	lalt (tap-hold-next 300 [ lalt )
+	rmet (tap-hold-next 300 S-] rmet )
 
-(defalias nubs (tap-hold-next 200 M-F6 (tap-macro-release M-F6 M-F6)))
+	nubs (tap-hold-next 200 M-F6 (tap-macro-release M-F6 M-F6))
+	)
 
 
 
