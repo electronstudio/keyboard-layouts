@@ -1,13 +1,22 @@
 ;; Slightly improved QWERTY for Kinesis Advantage keyboard US
 ;; ==========================================================
 ;;
-;; Unlike the homerow mod version, this version has no delay
-;; when typing.  It immediately types the key, then if you
-;; hold it deletes the key and re-types it in uppercase.
-;; Thus it won't work for all situations and you may prefer the
-;; homerow mod version, but I like the immediate feedback.
+;; Combines several versions into one file.
+;;
+;; F11 toggles the modifers on the homerow on/off
+;; (hold j for shift, k for ctrl, etc)
+;;
+;; F12 switches between 2 layouts:
+;; 1. No-delay autoshift - It immediately types the key, then if you
+;;    hold it deletes the key and re-types it shifted.
+;;    Thus it won't work for all programs but I like the immediate feedback.
+;; 2. Autoshift with delay - doesn't type a key until you release it.
+;;    Hold for 300-1000ms then release for shifted version.
 ;;
 ;; Sets key repeat rate to 40
+;;
+;; Layout changes
+;; --------------
 ;;
 ;; Moves 'delete' key to 'pause' key
 ;; Replaces 'caps-lock' key with 'escape' key
@@ -15,13 +24,12 @@
 ;;
 ;; Moves 'meta' key *tap* to 'delete' key
 ;;    Hold that key for `mod` layer:
-;;        cursor keys left on left
+;;        cursor keys on left ring finger
 ;;        num pad on right
 ;;        £ on 3
 ;;
-;; Hold any key to type uppercase version (and delete the lower case version)
-;;
-;; Tap shift, ctrl and alt keys for parenthesis
+;; TAP shift, ctrl and alt keys for parenthesis
+;; HOLD them for shift, ctrl, alt
 ;;
 ;; 'nubs key on bottom left'
 ;; -------------------------
@@ -36,8 +44,8 @@
   fallthrough true
   allow-cmd true
   cmp-seq ralt    ;; Set the compose key to `RightAlt'
-  cmp-seq-delay 5 ;; 5ms delay between each compose-key sequence press
-  key-seq-delay 5 ;; 5ms delay between each outputted key event
+  cmp-seq-delay 2 ;; 5ms delay between each compose-key sequence press
+  key-seq-delay 2 ;; 5ms delay between each outputted key event
 )
 
 
@@ -57,10 +65,10 @@
 )
 
 
-(deflayer default
-  esc F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12  prnt slck del
+(deflayer autoshift
+  esc F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  @hmrow  @switch  prnt slck del
 
-  @=     @1    @2    @3    @4    @5                   @6    @7    @8    @9    @0     @-
+  @=    @1   @2   @3   @4   @5                  @6   @7   @8   @9   @0    @-
   tab   @q   @w   @e   @r   @t                  @y   @u   @i   @o   @p    @\
   esc   @a   @s   @d   @f   @g                  @h   @j   @k   @l   @;    @'
   @lsft @z   @x   @c   @v   @b                  @n   @m   @,   @.   @/    @rsft
@@ -72,11 +80,56 @@
 )
 
 
+(deflayer autoshift2
+  esc F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  @hmrow @switch2 prnt slck del
+
+  @=2   @12   @22   @32   @42   @52                  @62   @72   @82   @92   @02    @-2
+  tab   @q2   @w2   @e2   @r2   @t2                  @y2   @u2   @i2   @o2   @p2    @\2
+  esc   @a2   @s2   @d2   @f2   @g2                  @h2   @j2   @k2   @l2   @;2    @'2
+  @lsft @z2   @x2   @c2   @v2   @b2                  @n2   @m2   @,2   @.2   @/2    @rsft
+        @grv2  @nubs left rght                        up   down @[2    @]2
+
+                           @lctl @lalt   @rctl @rmet
+                      bspc @mod   home   pgup  ret spc
+                                  end    pgdn
+)
+
+
+(deflayer empty
+  _   _    _    _    _    _    _    _    _    _    _   _   _   _    _    _
+
+  _    _    _    _    _    _                    _    _    _    _    _    _
+  _    _    _    _    _    _                    _    _    _    _    _    _
+  _    _    _    _    _    _                    _    _    _    _    _    _ 
+  _    _    _    _    _    _                    _    _    _    _    _    _
+       _    _    _    _                              _    _    _    _
+
+                           _    _      _     _   
+                      _    _    _      _     _   _
+                                _      _
+)
+
+(deflayer homerow
+  _   _    _    _    _    _    _    _    _    _    _   @hroff  _  _   _    _
+
+  _    _    _    _    _    _                    _    _    _    _    _    _
+  _    _    _    _    _    _                    _    _    _    _    _    _
+  _    @am  @sm  @dm  @fm  @gm                  @hm  @jm  @km  @lm  @;m  _ 
+  _    _    _    _    _    _                    _    _    _    _    _    _
+       _    _    _    _                              _    _    _    _
+
+                           _    _      _     _   
+                      _    _    _      _     _   _
+                                _      _
+)
+
+
+
 (deflayer mod
   _   _    _    _    _    _    _    _    _    _    _   _   _   _    _    _
 
   _    _    _    £    _    _                    _    _    _    _    _    _
-  _    _    w    up   _    _                    S-7  7    8    9    -    _
+  _    _    _    up   _    _                    S-7  7    8    9    -    _
   _    _    left down rght S-9                  S-0  4    5    6    +    _
   _    S-1  S-2  S-3  S-4  S-5                  S-8  1    2    3    ret  _
        _    _    _    _                              0    _    .    ret
@@ -85,6 +138,7 @@
                       del  _    _      _     _   _
                                 _      _
 )
+
 
 (defalias
 	mod (tap-next tab (layer-toggle mod))
@@ -115,7 +169,6 @@
 	x (tap-macro x (tap-hold 300 XX (tap-macro bspc (tap-macro S-x XX))))
 	y (tap-macro y (tap-hold 300 XX (tap-macro bspc (tap-macro S-y XX))))
 	z (tap-macro z (tap-hold 300 XX (tap-macro bspc (tap-macro S-z XX))))
-
 	, (tap-macro , (tap-hold 300 XX (tap-macro bspc (tap-macro S-, XX))))
 	. (tap-macro . (tap-hold 300 XX (tap-macro bspc (tap-macro S-. XX))))
 	/ (tap-macro / (tap-hold 300 XX (tap-macro bspc (tap-macro S-/ XX))))
@@ -146,7 +199,72 @@
 	rmet (tap-hold-next 300 S-] rmet )
 
 	nubs (tap-hold-next 200 M-F6 (tap-macro-release M-F6 M-F6))
-	)
 
+    switch (tap-macro (cmd-button "notify-send -a 'Kmonad' 'Layout: autoshift WITH DELAY'") (layer-switch autoshift2))
+    switch2 (tap-macro (cmd-button "notify-send -a 'Kmonad' 'Layout: autoshift NO DELAY'") (layer-switch autoshift))
+
+    hmrow (tap-macro (cmd-button "notify-send -a 'Kmonad' 'Homerow modifier keys ON'") (layer-add homerow))
+    hroff (tap-macro (cmd-button "notify-send -a 'Kmonad' 'Homerow modifier keys OFF'") (layer-rem homerow))
+
+	am (tap-hold 300 a (tap-hold-next-press 1000 S-a lmet))
+	dm (tap-hold 300 d (tap-hold-next-press 1000 S-d lctl))
+    fm (tap-hold 300 f (tap-hold-next-press 1000 S-f lsft))
+	jm (tap-hold 300 j (tap-hold-next-press 1000 S-j rsft))
+	km (tap-hold 300 k (tap-hold-next-press 1000 S-k rctl))
+	lm (tap-hold 300 l (tap-hold-next-press 1000 S-l ralt))
+    sm (tap-hold 300 s (tap-hold-next-press 1000 S-s lalt))
+    ;m (tap-hold 300 ; (tap-hold-next-press 1000 S-; rmet))
+    hm (tap-hold 300 h (tap-hold-next-press 1000 S-h (layer-toggle mod)))
+    gm (tap-hold 300 g (tap-hold-next-press 1000 S-g (layer-toggle mod)))
+
+    a2 (tap-hold 300 a (tap-hold 800 S-a a))
+    b2 (tap-hold 300 b (tap-hold 800 S-b b))
+    c2 (tap-hold 300 c (tap-hold 800 S-c c))
+    d2 (tap-hold 300 d (tap-hold 800 S-d d))
+    e2 (tap-hold 300 e (tap-hold 800 S-e e))
+    f2 (tap-hold 300 f (tap-hold 800 S-f f))
+    g2 (tap-hold 300 g (tap-hold 800 S-g g))
+    h2 (tap-hold 300 h (tap-hold 800 S-h h))
+    i2 (tap-hold 300 i (tap-hold 800 S-i i))
+    j2 (tap-hold 300 j (tap-hold 800 S-j j))
+    k2 (tap-hold 300 k (tap-hold 800 S-k k))
+    l2 (tap-hold 300 l (tap-hold 800 S-l l))
+    m2 (tap-hold 300 m (tap-hold 800 S-m m))
+    n2 (tap-hold 300 n (tap-hold 800 S-n n))
+    o2 (tap-hold 300 o (tap-hold 800 S-o o))
+    p2 (tap-hold 300 p (tap-hold 800 S-p p))
+    q2 (tap-hold 300 q (tap-hold 800 S-q q))
+    r2 (tap-hold 300 r (tap-hold 800 S-r r))
+    s2 (tap-hold 300 s (tap-hold 800 S-s s))
+    t2 (tap-hold 300 t (tap-hold 800 S-t t))
+    u2 (tap-hold 300 u (tap-hold 800 S-u u))
+    v2 (tap-hold 300 v (tap-hold 800 S-v v))
+    w2 (tap-hold 300 w (tap-hold 800 S-w w))
+    x2 (tap-hold 300 x (tap-hold 800 S-x x))
+    y2 (tap-hold 300 y (tap-hold 800 S-y y))
+    z2 (tap-hold 300 z (tap-hold 800 S-z z))
+    ;2 (tap-hold 300 ; (tap-hold 800 S-; ;))
+    ,2 (tap-hold 300 , (tap-hold 800 S-, ,))
+    .2 (tap-hold 300 . (tap-hold 800 S-. .))
+    /2 (tap-hold 300 / (tap-hold 800 S-/ /))
+    -2 (tap-hold 300 - (tap-hold 800 S-- -))
+    \2 (tap-hold 300 \ (tap-hold 800 S-\ \ ))
+    '2 (tap-hold 300 ' (tap-hold 800 S-' '))
+    grv2 (tap-hold 300 grv (tap-hold 800 S-grv grv))
+    [2 (tap-hold 300 [ (tap-hold 800 S-[ [))
+    ]2 (tap-hold 300 ] (tap-hold 800 S-] ]))
+    =2 (tap-hold 300 = (tap-hold 800 S-= =))
+    02 (tap-hold 300 0 (tap-hold 800 S-0 0))
+    12 (tap-hold 300 1 (tap-hold 800 S-1 1))
+    22 (tap-hold 300 2 (tap-hold 800 S-2 2))
+    32 (tap-hold 300 3 (tap-hold 800 S-3 3))
+    42 (tap-hold 300 4 (tap-hold 800 S-4 4))
+    52 (tap-hold 300 5 (tap-hold 800 S-5 5))
+    62 (tap-hold 300 6 (tap-hold 800 S-6 6))
+    72 (tap-hold 300 7 (tap-hold 800 S-7 7))
+    82 (tap-hold 300 8 (tap-hold 800 S-8 8))
+    92 (tap-hold 300 9 (tap-hold 800 S-9 9))
+    
+)
 
 
