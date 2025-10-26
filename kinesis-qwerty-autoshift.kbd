@@ -1,5 +1,8 @@
-;; Slightly improved QWERTY for Kinesis Advantage keyboard US
-;; ==========================================================
+;; Slightly improved QWERTY for US layout keyboards
+;; ================================================
+;;
+;; Designed for Kinesis Advantage layout but only need a couple of changes
+;; for regular keyboards.
 ;;
 ;; Combines several versions into one file.
 ;;
@@ -18,15 +21,18 @@
 ;; Layout changes
 ;; --------------
 ;;
-;; Moves 'delete' key to 'pause' key
-;; Replaces 'caps-lock' key with 'escape' key
-;; Replaces 'left meta' key with 'left control' key.
+;; Maps `pause` key to be `del`.
+;; Maps `caps-lock` key to be `esc`.
+;; Maps `left meta` key to be `ctrl`. (If not on kinesis, suggest you map to `mod` layer instead.)
+;; Maps `right meta` key to be `alt`. (If you need a meta key, remove this. )
 ;;
-;; Moves 'meta' key *tap* to 'delete' key
-;;    Hold that key for `mod` layer:
+;; Changes `del` key to work as `tab` when tapped, `mod` when held.
+;; (If you are not on a kinesis layout, suggest remove this.)
+;;    When held for `mod` layer:
 ;;        cursor keys on left ring finger
 ;;        num pad on right
 ;;        £ on 3
+;;        symbols
 ;;
 ;; TAP shift, ctrl and alt keys for parenthesis
 ;; HOLD them for shift, ctrl, alt
